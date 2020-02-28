@@ -1,0 +1,20 @@
+Version
+https://ddragon.leagueoflegends.com/api/versions.json
+
+Champion Splash Assets
+http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
+
+Champion Loading Screen Assets
+http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+
+Champion Square Assets
+http://ddragon.leagueoflegends.com/cdn/9.22.1/img/champion/Aatrox.png
+
+Champion Passive Assets
+http://ddragon.leagueoflegends.com/cdn/9.22.1/img/passive/Anivia_P.png
+
+Profile icons
+http://ddragon.leagueoflegends.com/cdn/9.22.1/img/profileicon/685.png
+
+Queue Type
+http://static.developer.riotgames.com/docs/lol/queues.json

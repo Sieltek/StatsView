@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html, #root{
+  background-color: #4c555e;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+div.spinner-border {
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button.btn-outline-secondary {
+  background-color: #FE4F4F;
+  border: #FE4F4F;
+}
+
+.navbar{
+  box-shadow: 0px 0px 9px black;
+}
+
+.accueil, .summonerInfo{
+  margin-top: 150px;
+}
+
+img.icone-invocateur {
+  border-radius: 100%;
+}
+
+h1.summoner-name-title{
+  display: inline-block;
+  color: #EFEFEF;
+  font-size: 60px;
+}
+
+.text-light {
+  color: #EFEFEF;
+}
+
+/* a.game-histo :hover {
+  background-color: #444c54;
+} */

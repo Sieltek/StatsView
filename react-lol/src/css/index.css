@@ -19,7 +19,8 @@ div.spinner-border {
   width: 150px;
   height: 150px;
   display: block;
-  margin-top: 150px;
+  margin-top: 100px;
+  margin-bottom: 100px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -50,7 +51,3 @@ h1.summoner-name-title{
 .text-light {
   color: #EFEFEF;
 }
-
-/* a.game-histo :hover {
-  background-color: #444c54;
-} */

@@ -31,6 +31,14 @@ app.get('/getMatchList/:accoundId/:parameters', async (req, res) => {
   });
 })
 
+// get match info
+app.get('/getMatch/:idMatch', async (req, res) => {
+  var idMatch = req.params.idMatch
+  request('https://euw1.api.riotgames.com/lol/match/v4/matches/' + idMatch + '?api_key=' + api_key, function (error, response, body) {
+    res.send(body)
+  });
+})
+
 // get top tiers champ by lane
 app.get('/TopTier', async (req, res) => {
   request('https://euw.op.gg/champion/statistics', function (error, response, body) {

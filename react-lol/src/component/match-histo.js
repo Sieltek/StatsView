@@ -1,15 +1,18 @@
 import React from 'react'
-import { Jumbotron } from 'react-bootstrap'
+import { Spinner, Jumbotron } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+// import MatchInfo from './match-info'
 
 class MatchHisto extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            matchInfo: [],
             summonerHisto: {
                 matches: []
             },
-            champImg: []
+            champImg: [],
+            updated: false,
         }
     }
 
@@ -21,6 +24,28 @@ class MatchHisto extends React.Component {
         if (prevProps.accountId !== this.props.accountId) {
             this.getSummonerMatchHisto();
         }
+    }
+
+    async getSummonerMatchInfo(i, gameId) {
+        let url = "http://localhost:4000/getMatch/" + gameId
+        let res = await fetch(url, { method: "GET" })
+        var matchInfo = await res.json()
+        var participantId = null
+        var resultGame = null
+        if (matchInfo) {
+            matchInfo.participantIdentities.forEach(element => {
+                if (element.player.accountId === this.props.accountId) {
+                    participantId = element.participantId
+                }
+            });
+            matchInfo.participants.forEach(element => {
+                if (element.participantId === participantId) {
+                    resultGame = element.stats.win
+                }
+            });
+            return [i, matchInfo, resultGame]
+        }
+        return [i, null, null]
     }
 
     async getChampId(id, id_champ) {
@@ -45,39 +70,68 @@ class MatchHisto extends React.Component {
             let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=10&beginIndex=0"
             let res = await fetch(url, { method: "GET" })
             var summonerHisto = await res.json()
-            summonerHisto.matches.forEach((element, i) => {
+            var resultSummonerMatchInfo = []
+            summonerHisto.matches.forEach(async (element, i) => {
                 this.getChampId(i, element.champion)
+                resultSummonerMatchInfo[i] = await this.getSummonerMatchInfo(i, element.gameId)
+                if (resultSummonerMatchInfo.length === 10) {
+                    this.setState({
+                        updated: true,
+                    });
+                }
             });
-            console.log(summonerHisto)
+            console.log(resultSummonerMatchInfo)
             this.setState({
                 summonerHisto: summonerHisto,
                 champImg: champImg,
+                matchInfo: resultSummonerMatchInfo,
             })
         }
     }
 
+    getResultGame(i) {
+        if (this.state.matchInfo !== "undefined") {
+            if (this.state.matchInfo[i]) {
+                if (this.state.matchInfo[i][2] === true) {
+                    return "WIN"
+                } else if (this.state.matchInfo[i][2] === false) {
+                    return "LOSE"
+                }
+            }
+        }
+    }
 
     render() {
-        return (
-            <div className="m-2">
-                <hr></hr>
-                {this.state.summonerHisto.matches.map((item, i) =>
-                    <a className="game-histo text-reset text-decoration-none" href="#" rounded>
-                        <Jumbotron className="row m-3 p-0 shadow" style={{ background: "#4C555E" }} key={i} rounded="true">
-                            <div className="col-2 text-center">
-                                <img className="rounded mt-2" anonymous="true" width="80px" src={"http://ddragon.leagueoflegends.com/cdn/10.3.1/img/champion/" + this.state.champImg[i] + ".png"} alt="" rounded="true" /> <br />
-                                <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
-                            </div>
-                            <div className="col-10">
-                                Game id : {item.gameId}<br />
-                                Role : {item.role}<br />
-                                Lane : {item.lane}<br /><br />
-                            </div>
-                        </Jumbotron>
-                    </a>
-                )}
-            </div>
-        )
+        if (this.state.updated) {
+            return (
+                <div className="m-2">
+                    <hr></hr>
+                    {this.state.summonerHisto.matches.map((item, i) =>
+                        <a className="game-histo text-reset text-decoration-none" key={i} href="#" rounded="true">
+                            <Jumbotron className="row m-3 p-0 shadow" style={{ background: "#4C555E" }} rounded="true">
+                                <div className="col-2 text-center">
+                                    <span>{this.state.matchInfo[i][2] ? "win" : "lose"}</span>
+                                    <img className="rounded mt-2" anonymous="true" width="80px" src={this.state.champImg[i] ? "http://ddragon.leagueoflegends.com/cdn/10.3.1/img/champion/" + this.state.champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
+                                    <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
+                                </div>
+                                <div className="col-10">
+                                    Game id : {item.gameId}<br />
+                                    {/* <MatchInfo match={item.gameId} accountId={this.props.accountId} /> */}
+                                </div>
+                            </Jumbotron>
+                        </a>
+                    )}
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <Spinner animation="border" role="status" variant="secondary">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </div>
+            )
+        }
     }
 }
 

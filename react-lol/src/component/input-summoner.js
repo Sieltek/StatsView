@@ -62,7 +62,7 @@ class InputSummoner extends React.Component {
       return (
         <div>
           <Media>
-            <img width={100} height={100} alt="summoner-icon" className="icone-invocateur" anonymous='true' src={"http://ddragon.leagueoflegends.com/cdn/9.22.1/img/profileicon/" + this.state.summonerJson.profileIconId + ".png"} />
+            <img width={100} height={100} alt="summoner-icon" className="icone-invocateur" anonymous='true' src={"https://opgg-static.akamaized.net/images/profile_icons/profileIcon" + this.state.summonerJson.profileIconId + ".jpg"} />
             <Media.Body className="m-3">
               <h1 className="summoner-name-title ml-4" >{this.state.summonerJson.name}</h1>
             </Media.Body>

@@ -74,7 +74,7 @@ class MatchHisto extends React.Component {
             summonerHisto.matches.forEach(async (element, i) => {
                 this.getChampId(i, element.champion)
                 resultSummonerMatchInfo[i] = await this.getSummonerMatchInfo(i, element.gameId)
-                if (resultSummonerMatchInfo.length === 10) {
+                if (resultSummonerMatchInfo.length === summonerHisto.matches.length) {
                     this.setState({
                         updated: true,
                     });
@@ -108,9 +108,8 @@ class MatchHisto extends React.Component {
                     <hr></hr>
                     {this.state.summonerHisto.matches.map((item, i) =>
                         <a className="game-histo text-reset text-decoration-none" key={i} href="#" rounded="true">
-                            <Jumbotron className="row m-3 p-0 shadow" style={{ background: "#4C555E" }} rounded="true">
+                            <Jumbotron className="row m-3 p-0 shadow" style={this.state.matchInfo[i][2] ? styles.win : styles.lose} rounded="true">
                                 <div className="col-2 text-center">
-                                    <span>{this.state.matchInfo[i][2] ? "win" : "lose"}</span>
                                     <img className="rounded mt-2" anonymous="true" width="80px" src={this.state.champImg[i] ? "http://ddragon.leagueoflegends.com/cdn/10.3.1/img/champion/" + this.state.champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
                                     <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
                                 </div>
@@ -133,6 +132,15 @@ class MatchHisto extends React.Component {
             )
         }
     }
+}
+
+const styles = {
+    win: {
+        background: "rgb(48, 92, 137, 0.5)",
+    },
+    lose: {
+        background: "rgb(160, 62, 62, 0.5)",
+    },
 }
 
 export default MatchHisto

@@ -45,7 +45,7 @@ class MatchHisto extends React.Component {
             });
             return [i, matchInfo, resultGame]
         }
-        return [i, null, null]
+        return [i, matchInfo, resultGame]
     }
 
     async getChampId(id, id_champ) {
@@ -54,12 +54,9 @@ class MatchHisto extends React.Component {
         let res = await fetch(url, { method: "GET" })
         var valJson = await res.json()
         valJson = Object.entries(valJson.data)
-        console.log(id_champ)
         for (var i = 0; i < valJson.length; i++) {
-            console.log(valJson[i][1]['key'])
             if (valJson[i][1]['key'] === id_champ.toString()) {
                 champImg[id] = valJson[i][0]
-                console.log(champImg)
                 break;
             }
         }
@@ -71,7 +68,7 @@ class MatchHisto extends React.Component {
     async getSummonerMatchHisto() {
         if (this.props.accountId) {
             var champImg = []
-            let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=20&beginIndex=0"
+            let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=10&beginIndex=0"
             let res = await fetch(url, { method: "GET" })
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []
@@ -84,24 +81,11 @@ class MatchHisto extends React.Component {
                     });
                 }
             });
-            console.log(resultSummonerMatchInfo)
             this.setState({
                 summonerHisto: summonerHisto,
                 champImg: champImg,
                 matchInfo: resultSummonerMatchInfo,
             })
-        }
-    }
-
-    getResultGame(i) {
-        if (this.state.matchInfo !== "undefined") {
-            if (this.state.matchInfo[i]) {
-                if (this.state.matchInfo[i][2] === true) {
-                    return "WIN"
-                } else if (this.state.matchInfo[i][2] === false) {
-                    return "LOSE"
-                }
-            }
         }
     }
 

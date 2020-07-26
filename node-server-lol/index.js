@@ -47,9 +47,12 @@ app.get('/TopTier', async (req, res) => {
 })
 
 // get top tiers champ by lane
-app.get('/getchampId/:id', async (req, res) => {
-  var id = req.params.id
-  request('http://ddragon.leagueoflegends.com/cdn/10.3.1/data/en_US/champion.json', function (error, response, body) {
+app.get('/getchamp', async (req, res) => {
+  var version = '10.15.1'
+  request('https://ddragon.leagueoflegends.com/api/versions.json', function (error, response, body) {
+    version = body[0]
+  });
+  request('http://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json', function (error, response, body) {
     res.send(body)
   });
 })

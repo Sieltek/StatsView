@@ -50,13 +50,17 @@ class MatchHisto extends React.Component {
 
     async getChampId(id, id_champ) {
         var champImg = this.state.champImg
-        let url = "http://localhost:4000/getchampId/" + id_champ
+        let url = "http://localhost:4000/getchamp"
         let res = await fetch(url, { method: "GET" })
         var valJson = await res.json()
         valJson = Object.entries(valJson.data)
+        console.log(id_champ)
         for (var i = 0; i < valJson.length; i++) {
+            console.log(valJson[i][1]['key'])
             if (valJson[i][1]['key'] === id_champ.toString()) {
                 champImg[id] = valJson[i][0]
+                console.log(champImg)
+                break;
             }
         }
         this.setState({
@@ -67,7 +71,7 @@ class MatchHisto extends React.Component {
     async getSummonerMatchHisto() {
         if (this.props.accountId) {
             var champImg = []
-            let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=10&beginIndex=0"
+            let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=20&beginIndex=0"
             let res = await fetch(url, { method: "GET" })
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []
@@ -110,7 +114,7 @@ class MatchHisto extends React.Component {
                         <a className="game-histo text-reset text-decoration-none" key={i} href="#" rounded="true">
                             <Jumbotron className="row m-3 p-0 shadow" style={this.state.matchInfo[i][2] ? styles.win : styles.lose} rounded="true">
                                 <div className="col-2 text-center">
-                                    <img className="rounded mt-2" anonymous="true" width="80px" src={this.state.champImg[i] ? "http://ddragon.leagueoflegends.com/cdn/10.3.1/img/champion/" + this.state.champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
+                                    <img className="rounded mt-2" anonymous="true" width="80px" src={this.state.champImg[i] ? "http://ddragon.leagueoflegends.com/cdn/10.15.1/img/champion/" + this.state.champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
                                     <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
                                 </div>
                                 <div className="col-10">

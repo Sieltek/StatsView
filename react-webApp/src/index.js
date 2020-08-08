@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import NavBar from './component/nav-bar';
 
+const AccueilAppLol = lazy(() => import('./view/accueil-app-lol'));
 const Accueil = lazy(() => import('./view/accueil'));
 const SummonerInfo = lazy(() => import('./view/summonerInfo'));
 // const Notfound = lazy(() => import('./component/not-found'));
@@ -15,16 +16,22 @@ const routing = (
     <Router>
         <Suspense fallback={
             <div>
-                <NavBar />
+                <Route path="/StatsView" component={NavBar} />
+                <Route exact path="/" component={NavBar} />
+
                 <Spinner animation="border" role="status" variant="secondary">
                     <span className="sr-only">Loading...</span>
                 </Spinner>
             </div>
         }>
             <div>
-                <NavBar />
+                <Route path="/StatsView" component={NavBar} />
+                <Route exact path="/StatsView" component={AccueilAppLol} />
+
+                <Route exact path="/" component={NavBar} />
                 <Route exact path="/" component={Accueil} />
-                <Route path="/summoner/:pseudo" component={SummonerInfo} />
+
+                <Route path="/StatsView/summoner/:pseudo" component={SummonerInfo} />
             </div>
         </Suspense>
     </Router>

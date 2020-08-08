@@ -4,7 +4,10 @@
 			"path": "node-server-lol"
 		},
 		{
-			"path": "react-lol"
+			"path": "node-server-minecraft"
+		},
+		{
+			"path": "react-webApp"
 		}
 	]
 }

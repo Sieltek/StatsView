@@ -14,7 +14,7 @@ const styles = {
 function SummonerInfo(props) {
     return (
         <Container className="summonerInfo shadow-sm rounded" style={styles.bandeau}>
-            <h1 style={styles.title} className="mb-4" >Summoner</h1>
+            <h1 style={styles.title} className="mb-3" >Summoner</h1>
             <InputSummoner pseudo={props.match.params.pseudo} />
         </Container>
     )

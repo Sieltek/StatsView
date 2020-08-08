@@ -20,7 +20,7 @@ class SearchSummoner extends React.Component {
     renderRedirect() {
         const { redirect } = this.state
         if (redirect && this.state.inputSummoner) {
-            var path = '/summoner/' + this.state.inputSummoner
+            var path = '/StatsView/summoner/' + this.state.inputSummoner
             this.props.history.push(path);
         }
     }

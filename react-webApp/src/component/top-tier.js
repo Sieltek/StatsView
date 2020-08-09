@@ -94,7 +94,7 @@ class TopTier extends React.Component {
                     <Card.Header className="m-0 p-0">{this.state.winrate[key].elem.lane}</Card.Header>
                     <Card.Body className="p-0">
                       <Card.Title className="py-1 m-0">{this.state.winrate[key].elem.champ}</Card.Title>
-                      <Card.Img variant="top" anonymous="true" src={"http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + this.state.winrate[key].elem.nospacechamp + "_0.jpg"} alt={"image of " + this.state.winrate[key].elem.cham} rounded="true" />
+                      <Card.Img variant="top" anonymous="true" src={"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + this.state.winrate[key].elem.nospacechamp + "_0.jpg"} alt={"image of " + this.state.winrate[key].elem.cham} rounded="true" />
                       <Card.Text className="card-text-top-tiers">{this.state.winrate[key].elem.rate}</Card.Text>
                     </Card.Body>
                   </Card>

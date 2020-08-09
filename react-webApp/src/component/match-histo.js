@@ -100,7 +100,7 @@ class MatchHisto extends React.Component {
                         <a className="game-histo text-reset text-decoration-none" key={i} href="#" rounded="true">
                             <Jumbotron className="row m-3 p-0 shadow" style={this.state.matchInfo[i][2] ? styles.win : styles.lose} rounded="true">
                                 <div className="col-2 text-center">
-                                    <img className="rounded mt-2" anonymous="true" width="80px" src={this.state.champImg[i] ? "http://ddragon.leagueoflegends.com/cdn/10.15.1/img/champion/" + this.state.champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
+                                    <img className="rounded mt-2" anonymous="true" width="80px" src={this.state.champImg[i] ? "https://ddragon.leagueoflegends.com/cdn/10.15.1/img/champion/" + this.state.champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
                                     <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
                                 </div>
                                 <div className="col-10">

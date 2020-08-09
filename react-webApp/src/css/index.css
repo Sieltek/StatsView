@@ -61,3 +61,18 @@ h1.summoner-name-title{
   text-shadow: 0px 0px 8px #000000;
   transform: translate(-50%, -50%);
 }
+
+@font-face {
+  font-family: 'dictatores';
+  src: local('dictatores'), url(../fonts/dictatores.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'minecraft';
+  src: local('minecraft'), url(../fonts/minecraft.ttf) format('truetype');
+}
+
+.dictatores {
+  font-family: 'dictatores';
+  color: #FE4F4F;
+}

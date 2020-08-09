@@ -92,7 +92,6 @@ class MatchHisto extends React.Component {
         }
 
         if (ok) {
-            console.log(this.state.matchInfo)
             return (
                 <div className="m-2">
                     <hr></hr>

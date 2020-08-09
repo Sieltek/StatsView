@@ -7,12 +7,13 @@ class MatchHisto extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            endIndex: 10,
+            beginIndex: 0,
             matchInfo: [],
             summonerHisto: {
                 matches: []
             },
             champImg: [],
-            updated: false,
         }
     }
 
@@ -68,18 +69,13 @@ class MatchHisto extends React.Component {
     async getSummonerMatchHisto() {
         if (this.props.accountId) {
             var champImg = []
-            let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=10&beginIndex=0"
+            let url = "http://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=" + this.state.endIndex + "&beginIndex=" + this.state.beginIndex
             let res = await fetch(url, { method: "GET" })
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []
             summonerHisto.matches.forEach(async (element, i) => {
                 this.getChampId(i, element.champion)
                 resultSummonerMatchInfo[i] = await this.getSummonerMatchInfo(i, element.gameId)
-                if (resultSummonerMatchInfo.length === summonerHisto.matches.length) {
-                    this.setState({
-                        updated: true,
-                    });
-                }
             });
             this.setState({
                 summonerHisto: summonerHisto,
@@ -90,7 +86,13 @@ class MatchHisto extends React.Component {
     }
 
     render() {
-        if (this.state.updated) {
+        var ok = false
+        if (this.state.matchInfo.length === (this.state.endIndex - this.state.beginIndex)){
+            ok = true
+        }
+
+        if (ok) {
+            console.log(this.state.matchInfo)
             return (
                 <div className="m-2">
                     <hr></hr>

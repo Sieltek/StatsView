@@ -8,28 +8,34 @@ class Accueil extends React.Component {
         return (
             <Container className="text-center" style={{ marginTop: 130 }}>
 
-                <Card border="dark">
-                    <Card.Header>Stats View</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Primary Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
+                <div className="blog-card">
+                    <div className="meta">
+                        <div className="photo photo-statsview" style={{ backgroundColor: "#343A40" }}></div>
+                        <div className="details">
+                            <a href="/StatsView">Voir plus</a>
+                        </div>
+                    </div>
+                    <div className="description">
+                        <h1 className="statsview"><span>S</span>TATS <span>V</span>IEW</h1>
+                        <h2>League of Legends Statistiques</h2>
+                        <p><span className="statsview"><span>S</span>TATS <span>V</span>IEW</span> est une application qui permet de voir les champions du moment en fonction du rôle choisi !</p>
+                        <p>Il permet aussi de voir les statistiques de son compte, avec son historique et son classement !</p>
+                    </div>
+                </div>
 
-
-                <Card border="dark">
-                    <Card.Header>Minecraft</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Primary Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                    </Card.Text>
-                    </Card.Body>
-                </Card>
+                <div className="blog-card alt">
+                    <div className="meta">
+                        <div className="photo photo-minecraft"></div>
+                        <div className="details">
+                            <a href="/Minecraft">Voir plus</a>
+                        </div>
+                    </div>
+                    <div className="description">
+                        <h1 className="minecraft">Serveur Minecraft</h1>
+                        <h2>sieltek.duckdns.org:25565</h2>
+                        <p className="minecraft">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.</p>
+                    </div>
+                </div>
 
                 <div className="m-5 p-0">
                     <h1>Serveur Discord <span className="dictatores">"Los Dictatores"</span> !</h1>
@@ -37,7 +43,7 @@ class Accueil extends React.Component {
                         width="100%" height="500"
                         frameBorder="0"
                         sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-                    </Iframe>  
+                    </Iframe>
                 </div>
             </Container>
         )

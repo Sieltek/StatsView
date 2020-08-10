@@ -28,7 +28,7 @@ class MatchHisto extends React.Component {
     }
 
     async getSummonerMatchInfo(i, gameId) {
-        let url = "http://localhost:4000/getMatch/" + gameId
+        let url = "http://sieltek.duckdns.org:4000/getMatch/" + gameId
         let res = await fetch(url, { method: "GET" })
         var matchInfo = await res.json()
         var participantId = null

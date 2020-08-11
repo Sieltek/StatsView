@@ -4,12 +4,14 @@ var cors = require('cors')
 const app = express()
 app.use(cors())
 
-const api_key = 'RGAPI-bc168e62-08ea-4236-af13-a0270f354faf'
+const api_key = require('./api-key.json')
+
+var api_lol = api_key.api_lol
 
 // get all info on player by summoner name
 app.get('/getSummoner/:summonerName', async (req, res) => {
   var summonerName = req.params.summonerName
-  request('https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summonerName + '?api_key=' + api_key, function (error, response, body) {
+  request('https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summonerName + '?api_key=' + api_lol, function (error, response, body) {
     res.send(body)
   });
 })
@@ -17,7 +19,7 @@ app.get('/getSummoner/:summonerName', async (req, res) => {
 // get the rank of a player
 app.get('/getRank/:summonerId', async (req, res) => {
   var summonerId = req.params.summonerId
-  request('https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/' + summonerId + '?api_key=' + api_key, function (error, response, body) {
+  request('https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/' + summonerId + '?api_key=' + api_lol, function (error, response, body) {
     res.send(body)
   });
 })
@@ -26,7 +28,7 @@ app.get('/getRank/:summonerId', async (req, res) => {
 app.get('/getMatchList/:accoundId/:parameters', async (req, res) => {
   var accoundId = req.params.accoundId
   var parameters = req.params.parameters
-  request('https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/' + accoundId + '?api_key=' + api_key + "&"+ parameters, function (error, response, body) {
+  request('https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/' + accoundId + '?api_key=' + api_lol + "&"+ parameters, function (error, response, body) {
     res.send(body)
   });
 })
@@ -34,7 +36,7 @@ app.get('/getMatchList/:accoundId/:parameters', async (req, res) => {
 // get match info
 app.get('/getMatch/:idMatch', async (req, res) => {
   var idMatch = req.params.idMatch
-  request('https://euw1.api.riotgames.com/lol/match/v4/matches/' + idMatch + '?api_key=' + api_key, function (error, response, body) {
+  request('https://euw1.api.riotgames.com/lol/match/v4/matches/' + idMatch + '?api_key=' + api_lol, function (error, response, body) {
     res.send(body)
   });
 })

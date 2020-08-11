@@ -33,7 +33,7 @@ class Accueil extends React.Component {
                     <div className="description">
                         <h1 className="minecraft">Serveur Minecraft</h1>
                         <h2>sieltek.duckdns.org:25565</h2>
-                        <p className="minecraft">Rejoignez une nouvelle aventure minecraft sous la version 1.16.1 ! Créez, modifiez, détruisez, combattez vous contre d'autres joueurs, une seule règle : Have some fun !</p>
+                        <p className="minecraft" style={{fontSize: 19}}>Rejoignez une nouvelle aventure minecraft sous la version 1.16.1 ! Créez, modifiez, détruisez, combattez vous contre d'autres joueurs, une seule règle : <span style={{color: '#FE4F4F'}}>Have some fun !</span></p>
                     </div>
                 </div>
 

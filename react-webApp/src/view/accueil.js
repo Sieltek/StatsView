@@ -33,7 +33,7 @@ class Accueil extends React.Component {
                     <div className="description">
                         <h1 className="minecraft">Serveur Minecraft</h1>
                         <h2>sieltek.duckdns.org:25565</h2>
-                        <p className="minecraft">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.</p>
+                        <p className="minecraft">Rejoignez une nouvelle aventure minecraft sous la version 1.16.1 ! Créez, modifiez, détruisez, combattez vous contre d'autres joueurs, une seule règle : Have some fun !</p>
                     </div>
                 </div>
 

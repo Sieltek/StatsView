@@ -30,9 +30,9 @@ class NavBar extends React.Component {
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto"></Nav>
-                            <Nav.Link href="/StatsView"><img src={require("../img/eye-logo.png")} alt="STATS VIEW" width="160px" /></Nav.Link>
-                            <Nav.Link href="/Minecraft"><img src={require("../img/minecraft.png")} alt="MINECRAFT" width="160px" /></Nav.Link>
-                            <Nav.Link href="/CV"><img src={require("../img/cv.png")} alt="CV" width="30px" /></Nav.Link>
+                            <Nav.Link href="/StatsView" className="hvr-float-shadow"><img src={require("../img/eye-logo.png")} alt="STATS VIEW" width="160px" /></Nav.Link>
+                            <Nav.Link href="/Minecraft" className="hvr-float-shadow"><img src={require("../img/minecraft.png")} alt="MINECRAFT" width="160px" /></Nav.Link>
+                            <Nav.Link href="/CV" className="hvr-float-shadow"><img src={require("../img/cv.png")} alt="CV" width="30px" /></Nav.Link>
                         </Navbar.Collapse>
                     </Navbar>
                 </div>

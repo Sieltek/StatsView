@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Card } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import Iframe from 'react-iframe'
 
 class Accueil extends React.Component {

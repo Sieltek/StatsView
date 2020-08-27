@@ -19,7 +19,7 @@ class TopTier extends React.Component {
 
   async getRes() {
     let url = "https://sieltek.duckdns.org:4000/toptier"
-    let res = await fetch(url, { method: "GET" })
+    let res = await fetch(url, { method: "GET", rejectUnauthorized: false })
     var response = await res.json()
     response = ReactHtmlParser(response.body)
     this.getDiv(response)

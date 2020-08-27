@@ -63,7 +63,8 @@ app.get('/getchamp', async (req, res) => {
 
 var sslOptions = {
   key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+  cert: fs.readFileSync('cert.pem'),
+  passphrase: api_key.passphrase
 };
 
 https.createServer(sslOptions, app).listen(4000, () => console.log('Api listening on port 4000...'))

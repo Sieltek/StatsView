@@ -31,7 +31,7 @@ class RankSummoner extends React.Component {
 
     async getSummonerRank() {
         if (this.props.summonerId) {
-            let url = "https://sieltek.duckdns.org:4000/getRank/" + this.props.summonerId
+            let url = "localhost:4000/getRank/" + this.props.summonerId
             let res = await fetch(url, { method: "GET" })
             var summonerRank = await res.json()
             console.log(summonerRank)

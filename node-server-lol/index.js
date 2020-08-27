@@ -2,8 +2,8 @@ var request = require('request');
 const express = require('express')
 var cors = require('cors')
 var https = require('https')
-const app = express()
 var fs = require('fs');
+const app = express()
 app.use(cors())
 
 const api_key = require('./api-key.json')
@@ -61,10 +61,11 @@ app.get('/getchamp', async (req, res) => {
   });
 })
 
-var sslOptions = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem'),
-  passphrase: api_key.passphrase
-};
+// var sslOptions = {
+//   key: fs.readFileSync('key.pem'),
+//   cert: fs.readFileSync('cert.pem'),
+//   passphrase: api_key.passphrase
+// };
 
-https.createServer(sslOptions, app).listen(4000, () => console.log('Api listening on port 4000...'))
+// https.createServer(sslOptions, app).listen(4000, () => console.log('Api listening on port 4000...'))
+app.listen(4000, () => console.log('Api listening on port 4000...'))

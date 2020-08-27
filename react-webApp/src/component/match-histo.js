@@ -28,7 +28,7 @@ class MatchHisto extends React.Component {
     }
 
     async getSummonerMatchInfo(i, gameId) {
-        let url = "localhost:4000/getMatch/" + gameId
+        let url = "https://localhost:4000/getMatch/" + gameId
         let res = await fetch(url, { method: "GET" })
         var matchInfo = await res.json()
         var participantId = null
@@ -51,7 +51,7 @@ class MatchHisto extends React.Component {
 
     async getChampId(id, id_champ) {
         var champImg = this.state.champImg
-        let url = "localhost:4000/getchamp"
+        let url = "https://localhost:4000/getchamp"
         let res = await fetch(url, { method: "GET" })
         var valJson = await res.json()
         valJson = Object.entries(valJson.data)
@@ -69,7 +69,7 @@ class MatchHisto extends React.Component {
     async getSummonerMatchHisto() {
         if (this.props.accountId) {
             var champImg = []
-            let url = "localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=" + this.state.endIndex + "&beginIndex=" + this.state.beginIndex
+            let url = "https://localhost:4000/getMatchList/" + this.props.accountId + "/endIndex=" + this.state.endIndex + "&beginIndex=" + this.state.beginIndex
             let res = await fetch(url, { method: "GET" })
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []

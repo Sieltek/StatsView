@@ -1,6 +1,7 @@
 var request = require('request');
 const express = require('express')
 var cors = require('cors')
+var https = require('https')
 const app = express()
 app.use(cors())
 
@@ -54,9 +55,9 @@ app.get('/getchamp', async (req, res) => {
   request('https://ddragon.leagueoflegends.com/api/versions.json', function (error, response, body) {
     version = body[0]
   });
-  request('http://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json', function (error, response, body) {
+  request('https://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json', function (error, response, body) {
     res.send(body)
   });
 })
 
-app.listen(4000, () => console.log('Api listening on port 4000...'))
+https.createServer(app).listen(4000, () => console.log('Api listening on port 4000...'))

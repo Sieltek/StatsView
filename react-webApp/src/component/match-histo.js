@@ -57,7 +57,12 @@ class MatchHisto extends React.Component {
     async getChampId(id, id_champ) {
         var champImg = this.state.champImg
         let url = "https://sieltek.duckdns.org:4000/getchamp"
-        let res = await fetch(url, { method: "GET", rejectUnauthorized: false })
+        let res = await fetch(url, {
+            method: "GET",
+            rejectUnauthorized: false,
+            requestCert: true,
+            agent: false
+        })
         var valJson = await res.json()
         valJson = Object.entries(valJson.data)
         for (var i = 0; i < valJson.length; i++) {
@@ -75,7 +80,12 @@ class MatchHisto extends React.Component {
         if (this.props.accountId) {
             var champImg = []
             let url = "https://sieltek.duckdns.org:4000/getMatchList/" + this.props.accountId + "/endIndex=" + this.state.endIndex + "&beginIndex=" + this.state.beginIndex
-            let res = await fetch(url, { method: "GET", rejectUnauthorized: false })
+            let res = await fetch(url, {
+                method: "GET",
+                rejectUnauthorized: false,
+                requestCert: true,
+                agent: false
+            })
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []
             summonerHisto.matches.forEach(async (element, i) => {

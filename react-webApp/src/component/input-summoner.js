@@ -48,9 +48,6 @@ class InputSummoner extends React.Component {
       let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getsummoner/" + this.props.pseudo
       let res = await fetch(url, {
         method: "GET",
-        rejectUnauthorized: false,
-        requestCert: true,
-        agent: false
       })
       var summonerJson = await res.json()
       console.log(summonerJson)

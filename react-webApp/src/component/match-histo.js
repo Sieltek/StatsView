@@ -28,12 +28,9 @@ class MatchHisto extends React.Component {
     }
 
     async getSummonerMatchInfo(i, gameId) {
-        let url = "https://sieltek.duckdns.org:4000/getMatch/" + gameId
+        let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatch/" + gameId
         let res = await fetch(url, {
             method: "GET",
-            rejectUnauthorized: false,
-            requestCert: true,
-            agent: false
         })
         var matchInfo = await res.json()
         var participantId = null
@@ -59,9 +56,6 @@ class MatchHisto extends React.Component {
         let url = "https://sieltek.duckdns.org:4000/getchamp"
         let res = await fetch(url, {
             method: "GET",
-            rejectUnauthorized: false,
-            requestCert: true,
-            agent: false
         })
         var valJson = await res.json()
         valJson = Object.entries(valJson.data)
@@ -79,12 +73,9 @@ class MatchHisto extends React.Component {
     async getSummonerMatchHisto() {
         if (this.props.accountId) {
             var champImg = []
-            let url = "https://sieltek.duckdns.org:4000/getMatchList/" + this.props.accountId + "/endIndex=" + this.state.endIndex + "&beginIndex=" + this.state.beginIndex
+            let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatchlist/" + this.props.accountId + "/endIndex=" + this.state.endIndex + "&beginIndex=" + this.state.beginIndex
             let res = await fetch(url, {
                 method: "GET",
-                rejectUnauthorized: false,
-                requestCert: true,
-                agent: false
             })
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []

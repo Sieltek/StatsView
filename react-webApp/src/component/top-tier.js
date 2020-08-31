@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactHtmlParser from 'react-html-parser';
 import { Col, Row, Card, Spinner } from 'react-bootstrap'
+import ReactHtmlParser from 'react-html-parser';
 
 const styles = {
   color: "#EFEFEF"
@@ -22,8 +22,8 @@ class TopTier extends React.Component {
     let res = await fetch(url, {
       method: "GET",
     })
-    var response = await res.json()
-    response = ReactHtmlParser(response.body)
+    var response = await res.text()
+    response = ReactHtmlParser(response)
     this.getDiv(response)
   }
 

@@ -14,10 +14,12 @@ class MatchHisto extends React.Component {
                 matches: []
             },
             champImg: [],
+            version: ""
         }
     }
 
     componentDidMount() {
+        this.getVersion()
         this.getSummonerMatchHisto()
     }
 
@@ -25,6 +27,17 @@ class MatchHisto extends React.Component {
         if (prevProps.accountId !== this.props.accountId) {
             this.getSummonerMatchHisto();
         }
+    }
+
+    async getVersion() {
+        let urlversion = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getversion/"
+        let version = await fetch(urlversion, {
+            method: "GET",
+        })
+        version = await version.json()
+        this.setState({
+            version: version[0]
+        })
     }
 
     async getSummonerMatchInfo(i, gameId) {
@@ -35,7 +48,7 @@ class MatchHisto extends React.Component {
         var matchInfo = await res.json()
         var participantId = null
         var resultGame = null
-        if (matchInfo) {
+        if (matchInfo.participantIdentities) {
             matchInfo.participantIdentities.forEach(element => {
                 if (element.player.accountId === this.props.accountId) {
                     participantId = element.participantId
@@ -53,12 +66,7 @@ class MatchHisto extends React.Component {
 
     async getChampId(id, id_champ) {
         var champImg = this.state.champImg
-        let urlversion = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getversion/"
-        let version = await fetch(urlversion, {
-            method: "GET",
-        })
-
-        let urlchamp = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getchamp/" + version[0]
+        let urlchamp = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getchamp/" + this.state.version
         let res = await fetch(urlchamp, {
             method: "GET",
         })
@@ -97,12 +105,7 @@ class MatchHisto extends React.Component {
     }
 
     render() {
-        var ok = false
-        if (this.state.matchInfo.length === (this.state.endIndex - this.state.beginIndex)){
-            ok = true
-        }
-
-        if (ok) {
+        if (this.state.matchInfo.length === this.state.endIndex) {
             return (
                 <div className="m-2">
                     <hr></hr>

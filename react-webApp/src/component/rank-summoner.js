@@ -36,7 +36,6 @@ class RankSummoner extends React.Component {
                 method: "GET",
             })
             var summonerRank = await res.json()
-            console.log(summonerRank)
             var isUnranked = true
             summonerRank.forEach(element => {
                 isUnranked = false

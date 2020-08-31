@@ -53,8 +53,13 @@ class MatchHisto extends React.Component {
 
     async getChampId(id, id_champ) {
         var champImg = this.state.champImg
-        let url = "https://sieltek.duckdns.org:4000/getchamp"
-        let res = await fetch(url, {
+        let urlversion = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getversion/"
+        let version = await fetch(urlversion, {
+            method: "GET",
+        })
+
+        let urlchamp = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getchamp/" + version[0]
+        let res = await fetch(urlchamp, {
             method: "GET",
         })
         var valJson = await res.json()

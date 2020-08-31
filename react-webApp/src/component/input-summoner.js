@@ -45,7 +45,7 @@ class InputSummoner extends React.Component {
 
   async getSummonerName() {
     if (this.props.pseudo) {
-      let url = "https://sieltek.duckdns.org:4000/getSummoner/" + this.props.pseudo
+      let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getsummoner/" + this.props.pseudo
       let res = await fetch(url, {
         method: "GET",
         rejectUnauthorized: false,

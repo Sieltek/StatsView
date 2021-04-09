@@ -31,6 +31,10 @@ const routing = (
                 <Route exact path="/" component={NavBar} />
                 <Route exact path="/" component={Accueil} />
 
+                <Route exact path="/CV" component={NavBar} />
+
+                <Route exact path="/Minecraft" component={NavBar} />
+
                 <Route path="/StatsView/summoner/:pseudo" component={SummonerInfo} />
             </div>
         </Suspense>

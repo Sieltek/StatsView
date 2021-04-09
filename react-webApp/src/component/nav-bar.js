@@ -22,7 +22,8 @@ class NavBar extends React.Component {
                     </Navbar>
                 </div>
             )
-        } else if (path === "/") {
+            // } else if (path === "/") {
+        } else {
             return (
                 <div className="nav-bar">
                     <Navbar bg="dark" variant="dark" fixed="top" expand="lg">

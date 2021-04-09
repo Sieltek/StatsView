@@ -4,29 +4,29 @@ class MatchInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            
+
         }
     }
 
-    componentDidMount() {
-        this.getSummonerMatchInfo()
-    }
+    // componentDidMount() {
+    //     this.getSummonerMatchInfo()
+    // }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.accountId !== this.props.accountId) {
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.accountId !== this.props.accountId) {
+    //     }
+    // }
 
-    
+
 
     render() {
-        if (this.state.resultGame === true){
+        if (this.state.resultGame === true) {
             return (
                 <div>
                     WIN
                 </div>
             )
-        } else if (this.state.resultGame === false){
+        } else if (this.state.resultGame === false) {
             return (
                 <div>
                     LOSE

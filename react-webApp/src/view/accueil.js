@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import Iframe from 'react-iframe'
 
 class Accueil extends React.Component {
 
@@ -36,15 +35,6 @@ class Accueil extends React.Component {
                         <p className="minecraft" style={{ fontSize: 19 }}>Rejoignez une nouvelle aventure minecraft sous la version 1.16.1 ! Créez, modifiez, détruisez, combattez vous contre d'autres joueurs, une seule règle : <span style={{ color: '#FE4F4F' }}>Have some fun !</span></p>
                     </div>
                 </div>
-
-                {/* <div className="m-5 p-0">
-                    <h1>Serveur Discord <span className="dictatores">"Los Dictatores"</span> !</h1>
-                    <Iframe url="https://discordapp.com/widget?id=360207498071769098&theme=dark"
-                        width="100%" height="500"
-                        frameBorder="0"
-                        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-                    </Iframe>
-                </div> */}
             </Container>
         )
     }

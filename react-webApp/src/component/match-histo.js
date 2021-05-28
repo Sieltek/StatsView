@@ -11,6 +11,7 @@ const MatchHisto = (props) => {
     const [summonerHisto, setSummonerHisto] = useState({ matches: [] })
     const [champImg, setChampImg] = useState([])
     const [version, setVersion] = useState("")
+    const [champInfo, setChampInfo] = useState()
 
     useEffect(() => {
         getVersion()
@@ -18,9 +19,15 @@ const MatchHisto = (props) => {
 
     useEffect(() => {
         if(version !== "") {
-            getSummonerMatchHisto()
+            getChampInfo()
         }
     }, [version])
+
+    useEffect(() => {
+        if(champInfo) {
+            getSummonerMatchHisto()
+        }
+    }, [champInfo])
 
     const getVersion = async () => {
         let urlversion = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getversion/"
@@ -54,26 +61,27 @@ const MatchHisto = (props) => {
         }
     }
 
-    const getChampId = async (id, id_champ) => {
-        var champImgCopy = champImg
+    const getChampInfo = async () => {
         let urlchamp = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getchamp/" + version
         let res = await fetch(urlchamp, {
             method: "GET",
         })
         var valJson = await res.json()
         valJson = Object.entries(valJson.data)
-        for (var i = 0; i < valJson.length; i++) {
-            if (valJson[i][1]['key'] === id_champ.toString()) {
-                champImgCopy[id] = valJson[i][0]
-                break;
+        setChampInfo(valJson)
+    }
+
+    const getChampId = (id, id_champ) => {
+        for (var i = 0; i < champInfo.length; i++) {
+            if (champInfo[i][1]['key'] === id_champ.toString()) {
+                return champInfo[i][0]
             }
         }
-        console.log(champImg)
-        setChampImg(champImgCopy)
     }
 
     const getSummonerMatchHisto = async () => {
         if (props.accountId) {
+            let champImgCopy = []
             let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatchlist/" + props.accountId + "/endIndex=" + endIndex + "&beginIndex=" + beginIndex
             let res = await fetch(url, {
                 method: "GET",
@@ -83,13 +91,15 @@ const MatchHisto = (props) => {
             var resultSummonerMatchInfo = []
             console.log(summonerHisto)
 
-            let i = 0
-            for (const element of summonerHisto.matches) {
-                await getChampId(i, element.champion)
-                resultSummonerMatchInfo[i] = await getSummonerMatchInfo(i, element.gameId)
-                i++;
-            }
+            const promises = summonerHisto.matches.map(async (element, i) => {
+                champImgCopy[i] = getChampId(i, element.champion)
+                return await getSummonerMatchInfo(i, element.gameId)
+                //return resultSummonerMatchInfo
+            });
 
+            resultSummonerMatchInfo = await Promise.all(promises)
+
+            setChampImg(champImgCopy)
             setSummonerHisto(summonerHisto)
             setMatchInfo(resultSummonerMatchInfo)
         }

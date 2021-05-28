@@ -89,12 +89,10 @@ const MatchHisto = (props) => {
 
             var summonerHisto = await res.json()
             var resultSummonerMatchInfo = []
-            console.log(summonerHisto)
 
             const promises = summonerHisto.matches.map(async (element, i) => {
                 champImgCopy[i] = getChampId(i, element.champion)
                 return await getSummonerMatchInfo(i, element.gameId)
-                //return resultSummonerMatchInfo
             });
 
             resultSummonerMatchInfo = await Promise.all(promises)
@@ -104,9 +102,6 @@ const MatchHisto = (props) => {
             setMatchInfo(resultSummonerMatchInfo)
         }
     }
-
-    console.log("matchInfo", matchInfo)
-    console.log("champImg", champImg)
 
     return (
         summonerHisto && matchInfo.length ?

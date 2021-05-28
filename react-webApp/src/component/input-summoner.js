@@ -50,7 +50,6 @@ class InputSummoner extends React.Component {
         method: "GET",
       })
       var summonerJson = await res.json()
-      console.log(summonerJson)
       this.setState({
         summonerJson: summonerJson,
       })

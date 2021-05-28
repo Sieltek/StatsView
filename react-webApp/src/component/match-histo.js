@@ -1,14 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import { Spinner, Jumbotron } from 'react-bootstrap'
+import React, { useState, useEffect, useRef } from 'react'
+import { Spinner, Jumbotron, Button } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import MatchInfo from './match-info'
 
+function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value;
+    }, [value]);
+    return ref.current;
+}
+
 const MatchHisto = (props) => {
-    const endIndex = 10
-    const beginIndex = 0
+    const [endIndex, setEndIndex] = useState(10)
+    const [beginIndex, setBeginIndex] = useState(0)
+    const prevEndIndex = usePrevious(endIndex)
 
     const [matchInfo, setMatchInfo] = useState([])
-    const [summonerHisto, setSummonerHisto] = useState({ matches: [] })
+    const [summonerHisto, setSummonerHisto] = useState({matches: []})
     const [champImg, setChampImg] = useState([])
     const [version, setVersion] = useState("")
     const [champInfo, setChampInfo] = useState()
@@ -18,16 +27,22 @@ const MatchHisto = (props) => {
     }, [])
 
     useEffect(() => {
-        if(version !== "") {
+        if (version !== "") {
             getChampInfo()
         }
     }, [version])
 
     useEffect(() => {
-        if(champInfo) {
+        if (champInfo) {
             getSummonerMatchHisto()
         }
     }, [champInfo])
+
+    useEffect(() => {
+        if (prevEndIndex !== endIndex && endIndex !== 10) {
+            getSummonerMatchHisto()
+        }
+    }, [endIndex])
 
     const getVersion = async () => {
         let urlversion = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getversion/"
@@ -71,7 +86,7 @@ const MatchHisto = (props) => {
         setChampInfo(valJson)
     }
 
-    const getChampId = (id, id_champ) => {
+    const getChampId = (id_champ) => {
         for (var i = 0; i < champInfo.length; i++) {
             if (champInfo[i][1]['key'] === id_champ.toString()) {
                 return champInfo[i][0]
@@ -87,27 +102,47 @@ const MatchHisto = (props) => {
                 method: "GET",
             })
 
-            var summonerHisto = await res.json()
-            var resultSummonerMatchInfo = []
+            var summonerHistoTmp = await res.json()
 
-            const promises = summonerHisto.matches.map(async (element, i) => {
-                champImgCopy[i] = getChampId(i, element.champion)
+            const promises = summonerHistoTmp.matches.map(async (element, i) => {
+                champImgCopy[i] = getChampId(element.champion)
                 return await getSummonerMatchInfo(i, element.gameId)
             });
 
-            resultSummonerMatchInfo = await Promise.all(promises)
+            let resultSummonerMatchInfoTmp = await Promise.all(promises)
+            let resultSummonerMatchInfo = [...matchInfo]
+            resultSummonerMatchInfoTmp.forEach((matches) => {
+                resultSummonerMatchInfo.push(matches)
+            })
 
-            setChampImg(champImgCopy)
-            setSummonerHisto(summonerHisto)
+            let summonerHistoPrev = {...summonerHisto}
+            let summonerHistoNew = {
+                ...summonerHistoPrev,
+                matches: [
+                    ...summonerHistoPrev.matches,
+                    ...summonerHistoTmp.matches
+                ]
+            }
+
+            let champImgNew = [...champImg, ...champImgCopy]
+
+            setChampImg(champImgNew)
+            setSummonerHisto(summonerHistoNew)
             setMatchInfo(resultSummonerMatchInfo)
         }
     }
 
+    const loadMore = () => {
+        setBeginIndex(currentVal => currentVal + 10)
+        setEndIndex(currentVal => currentVal + 10)
+    }
+
     return (
-        summonerHisto && matchInfo.length ?
+        summonerHisto.matches.length && matchInfo.length ?
             <div className="m-2">
                 <hr></hr>
                 {summonerHisto.matches.map((item, i) =>
+                    matchInfo[i] ?
                     <a className="game-histo text-reset text-decoration-none" key={i} href={"#" + item.gameId} rounded="true">
                         <Jumbotron className="row m-3 p-0 shadow" style={matchInfo[i][2] ? styles.win : styles.lose} rounded="true">
                             <div className="col-2 text-center">
@@ -120,7 +155,10 @@ const MatchHisto = (props) => {
                             </div>
                         </Jumbotron>
                     </a>
+                    :
+                    null
                 )}
+                <Button onClick={loadMore} >More</Button>
             </div>
             :
             <div>

@@ -11,6 +11,9 @@ import NavBar from './component/nav-bar';
 const AccueilAppLol = lazy(() => import('./view/accueil-app-lol'));
 const Accueil = lazy(() => import('./view/accueil'));
 const SummonerInfo = lazy(() => import('./view/summonerInfo'));
+const ChampionInfo = lazy(() => import('./view/championInfo'));
+const ChampionInfoIndiv = lazy(() => import('./view/championInfoIndiv'));
+
 // const Notfound = lazy(() => import('./component/not-found'));
 
 const Routing = () => {
@@ -30,6 +33,9 @@ const Routing = () => {
                     <Route exact path="/" component={Accueil} />
 
                     <Route path="/StatsView/summoner/:pseudo" component={SummonerInfo} />
+                    <Route exact path="/StatsView/champions" component={ChampionInfo} />
+                    <Route path="/StatsView/champion/:name" component={ChampionInfoIndiv} />
+
                 </div>
             </Suspense>
         </Router>

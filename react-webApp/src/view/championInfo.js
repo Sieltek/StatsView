@@ -11,7 +11,7 @@ class ChampionInfo extends React.Component {
     }
 
     async getAllChampions() {
-        let url = "http://ddragon.leagueoflegends.com/cdn/11.11.1/data/en_US/champion.json"
+        let url = "https://ddragon.leagueoflegends.com/cdn/11.11.1/data/en_US/champion.json"
         let res = await fetch(url, {
             method: "GET",
         })

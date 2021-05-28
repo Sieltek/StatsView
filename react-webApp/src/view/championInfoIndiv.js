@@ -11,7 +11,7 @@ class ChampionInfoIndiv extends React.Component {
     }
 
     async getChampionInfo() {
-        let url = "http://ddragon.leagueoflegends.com/cdn/11.11.1/data/en_US/champion/" + this.props.match.params.name + ".json"
+        let url = "https://ddragon.leagueoflegends.com/cdn/11.11.1/data/en_US/champion/" + this.props.match.params.name + ".json"
         let res = await fetch(url, {
             method: "GET",
         })

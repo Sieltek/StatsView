@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 
-class ChampionInfo extends React.Component {
+class ChampionInfoIndiv extends React.Component {
 
     constructor(props) {
         super(props)
@@ -28,9 +28,11 @@ class ChampionInfo extends React.Component {
 
     render() {
         return (
-            <Container><h3>this.props.match.params.name</h3></Container>
+            <Container className="accueil-app-lol" >
+                <h3>{JSON.stringify(this.state.champInfo)}</h3>
+            </Container>
         )
     }
 }
 
-export default ChampionInfo
+export default ChampionInfoIndiv

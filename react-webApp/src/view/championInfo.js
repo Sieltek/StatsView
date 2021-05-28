@@ -32,7 +32,7 @@ class ChampionInfo extends React.Component {
 
     render() {
         return (
-            <Container>
+            <Container  className="accueil-app-lol">
                 <ul>
                     {
                         this.state.champions.map((item, i) =>

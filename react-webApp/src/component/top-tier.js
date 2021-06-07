@@ -70,7 +70,7 @@ class TopTier extends React.Component {
         .props.children[4]
         .props.children[0] // win rate
 
-      let nospacechamp = champ.replace(/\s/g, '')
+      let nospacechamp = champ.replace(/\s/g, '').replace('Wukong', 'MonkeyKing')
 
       elem.lane = lane[i];
       elem.champ = champ;
@@ -108,7 +108,7 @@ class TopTier extends React.Component {
       )
     }
     else {
-      return(
+      return (
         <div>
           <h1 className="mt-4">Top Tiers Champs :</h1>
           <Spinner animation="border" role="status" variant="secondary">

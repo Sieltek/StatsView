@@ -36,7 +36,7 @@ class ChampionInfo extends React.Component {
                 <ul>
                     {
                         this.state.champions.map((item, i) =>
-                            <li><a href={'/StatsView/champion/' + item[0]}>{item[0]}</a>, {item[1].version}</li>
+                            <li><a href={'/StatsView/champion/' + item[0]}>{item[1].name}</a>, {item[1].version}</li>
                         )
                     }
                 </ul>

@@ -18,7 +18,7 @@ class ChampionInfoIndiv extends React.Component {
         var response = await res.json()
         console.log(response);
         this.setState({
-            champInfo: response
+            champInfo: response.data[this.props.match.params.name] 
         })
     }
 
@@ -29,7 +29,18 @@ class ChampionInfoIndiv extends React.Component {
     render() {
         return (
             <Container className="accueil-app-lol" >
-                <h3>{JSON.stringify(this.state.champInfo)}</h3>
+                <h1>{this.state.champInfo.name}</h1>
+                <h2>Lore</h2>
+                <p>{this.state.champInfo.lore}</p>
+                <h2>Skins</h2>
+                <p>{JSON.stringify(this.state.champInfo.skins)}</p>
+                <h2>Tips</h2>
+                <h3>Ally</h3>
+                <p>{this.state.champInfo.allytips}</p>
+                <h3>Ennemy</h3>
+                <p>{this.state.champInfo.enemytips}</p>
+                <h3>Spells</h3>
+                <p>{JSON.stringify(this.state.champInfo.spells)}</p>
             </Container>
         )
     }

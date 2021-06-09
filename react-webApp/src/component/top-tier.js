@@ -90,14 +90,14 @@ class TopTier extends React.Component {
           <h2 className="mt-3">Top Tiers Champs :</h2>
           <Row className="mb-0">
             {this.state.winrate.map((win, key) =>
-              <Col key={key} >
+              <Col key={key}>
                 {this.state.winrate[key] &&
                   <Card style={styles} className="mt-3 text-center bg-dark">
-                    <Card.Header className="m-0 p-0">{this.state.winrate[key].elem.lane}</Card.Header>
+                    <Card.Header className="m-0 p-0">{win.elem.lane}</Card.Header>
                     <Card.Body className="p-0">
-                      <Card.Title className="py-1 m-0">{this.state.winrate[key].elem.champ}</Card.Title>
-                      <Card.Img variant="top" anonymous="true" src={"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + this.state.winrate[key].elem.nospacechamp + "_0.jpg"} alt={"image of " + this.state.winrate[key].elem.cham} rounded="true" />
-                      <Card.Text className="card-text-top-tiers">{this.state.winrate[key].elem.rate}</Card.Text>
+                      <Card.Title className="py-1 m-0">{win.elem.champ}</Card.Title>
+                      <Card.Img variant="top" anonymous="true" src={"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + win.elem.nospacechamp + "_0.jpg"} alt={"image of " + win.elem.cham} rounded="true" />
+                      <Card.Text className="card-text-top-tiers">{win.elem.rate}</Card.Text>
                     </Card.Body>
                   </Card>
                 }

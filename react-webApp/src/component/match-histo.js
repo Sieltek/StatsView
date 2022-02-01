@@ -54,6 +54,7 @@ const MatchHisto = (props) => {
         console.log(matchInfo, i)
         var participantId = null
         var resultGame = null
+        var champ = null
         if (matchInfo.metadata) {
             matchInfo.metadata.participants.forEach(element => {
                 if (element === props.data.puuid) {
@@ -63,9 +64,10 @@ const MatchHisto = (props) => {
             matchInfo.info.participants.forEach(element => {
                 if (element.puuid === participantId) {
                     resultGame = element.win
+                    champ = element.championName
                 }
             });
-            return [i, matchInfo, resultGame]
+            return [i, matchInfo, resultGame, champ]
         }
     }
 
@@ -82,19 +84,16 @@ const MatchHisto = (props) => {
     const getSummonerMatchHisto = async () => {
         if (props.data.puuid) {
             let champImgCopy = []
-            let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatchlist/" + props.data.puuid + "/count=" + 10 + "&start=" + beginIndex
+            let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatchlist/" + props.data.puuid + "/start=" + beginIndex + "&count=" + 10
             let res = await fetch(url, {
                 method: "GET",
             })
             console.log(url)
             var summonerHistoTmp = await res.json()
 
-            console.log(summonerHistoTmp)
-
             const promises = summonerHistoTmp.map(async (element, i) => {
                 let matchData = await getSummonerMatchInfo(i, element)
-                console.log(matchData)
-                champImgCopy[i] = matchData[1].info.participants[i].championName
+                champImgCopy[i] = matchData[3]
                 return matchData
             });
 
@@ -106,12 +105,12 @@ const MatchHisto = (props) => {
 
             let summonerHistoPrev = { ...summonerHisto }
             let summonerHistoNew = {
-                summonerHistoPrev
+                ...summonerHistoPrev
             }
             let champImgNew = [...champImg, ...champImgCopy]
             console.log(summonerHistoNew)
             setChampImg(champImgNew)
-            setSummonerHisto(summonerHistoNew)
+            setSummonerHisto(summonerHistoTmp)
             setMatchInfo(resultSummonerMatchInfo)
         }
     }

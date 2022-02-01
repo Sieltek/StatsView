@@ -1,19 +1,20 @@
 import React from 'react'
 import { Card, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import InfoSum from './info-summoner'
+import img from '../img/elo/SILVER.png'
 
 class RankSummoner extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            summonerRank: [],
+            rank: [],
             isUnranked: false
         }
     }
 
     componentDidMount() {
         this.setState({
-            summonerRank: [],
+            rank: [],
             isUnranked: false
         })
         this.getSummonerRank()
@@ -22,7 +23,7 @@ class RankSummoner extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.summonerId !== this.props.summonerId) {
             this.setState({
-                summonerRank: [],
+                rank: [],
                 isUnranked: false
             })
             this.getSummonerRank()
@@ -37,16 +38,22 @@ class RankSummoner extends React.Component {
             })
             var summonerRank = await res.json()
             var isUnranked = true
-            summonerRank.forEach(element => {
-                isUnranked = false
-                if (element.queueType === "RANKED_FLEX_SR") {
+            var rank = []
+
+            summonerRank.forEach((element, i) => {
+                if (element.queueType === "RANKED_TEAM_5x5") {
+                    isUnranked = false
                     element.queueType = "Ranked Flex"
-                } else {
+                    rank.push(summonerRank[i])
+                } else if (element.queueType === 'RANKED_SOLO_5x5') {
+                    isUnranked = false
                     element.queueType = "Ranked Solo/Duo"
+                    rank.push(summonerRank[i])
                 }
             });
+
             this.setState({
-                summonerRank: summonerRank.reverse(),
+                rank: rank,
                 isUnranked: isUnranked
             })
         }
@@ -54,10 +61,11 @@ class RankSummoner extends React.Component {
 
 
     render() {
-        if (this.state.summonerRank.length !== 0) {
+        console.log(this.state.rank.length)
+        if (this.state.rank.length !== 0) {
             return (
                 <div className="row">
-                    {this.state.summonerRank.map((item, i) =>
+                    {this.state.rank.map((item, i) =>
                         <div key={i} className="col">
                             <Card className="text-center bg-dark text-light shadow">
                                 <Card.Header style={{ color: "#FE4F4F" }}>{item.queueType}</Card.Header>
@@ -65,7 +73,7 @@ class RankSummoner extends React.Component {
                                     <Card.Title>
                                         <Card.Img className="w-25" src={require("../img/elo/" + item.tier + ".png")} />
                                         {item.tier} {item.rank} {item.leaguePoints} LP
-                                        </Card.Title>
+                                    </Card.Title>
                                     <Card.Text>
                                         <OverlayTrigger placement="bottom" overlay={
                                             <Tooltip>

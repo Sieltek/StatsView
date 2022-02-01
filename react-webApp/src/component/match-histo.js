@@ -12,12 +12,10 @@ function usePrevious(value) {
 }
 
 const MatchHisto = (props) => {
-    const [endIndex, setEndIndex] = useState(10)
     const [beginIndex, setBeginIndex] = useState(0)
-    const prevEndIndex = usePrevious(endIndex)
 
     const [matchInfo, setMatchInfo] = useState([])
-    const [summonerHisto, setSummonerHisto] = useState({matches: []})
+    const [summonerHisto, setSummonerHisto] = useState([])
     const [champImg, setChampImg] = useState([])
     const [version, setVersion] = useState("")
     const [champInfo, setChampInfo] = useState()
@@ -38,12 +36,6 @@ const MatchHisto = (props) => {
         }
     }, [champInfo])
 
-    useEffect(() => {
-        if (prevEndIndex !== endIndex && endIndex !== 10) {
-            getSummonerMatchHisto()
-        }
-    }, [endIndex])
-
     const getVersion = async () => {
         let urlversion = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getversion/"
         let version = await fetch(urlversion, {
@@ -59,17 +51,18 @@ const MatchHisto = (props) => {
             method: "GET",
         })
         var matchInfo = await res.json()
+        console.log(matchInfo, i)
         var participantId = null
         var resultGame = null
-        if (matchInfo.participantIdentities) {
-            matchInfo.participantIdentities.forEach(element => {
-                if (element.player.accountId === props.accountId) {
-                    participantId = element.participantId
+        if (matchInfo.metadata) {
+            matchInfo.metadata.participants.forEach(element => {
+                if (element === props.data.puuid) {
+                    participantId = element
                 }
             });
-            matchInfo.participants.forEach(element => {
-                if (element.participantId === participantId) {
-                    resultGame = element.stats.win
+            matchInfo.info.participants.forEach(element => {
+                if (element.puuid === participantId) {
+                    resultGame = element.win
                 }
             });
             return [i, matchInfo, resultGame]
@@ -86,27 +79,23 @@ const MatchHisto = (props) => {
         setChampInfo(valJson)
     }
 
-    const getChampId = (id_champ) => {
-        for (var i = 0; i < champInfo.length; i++) {
-            if (champInfo[i][1]['key'] === id_champ.toString()) {
-                return champInfo[i][0]
-            }
-        }
-    }
-
     const getSummonerMatchHisto = async () => {
-        if (props.accountId) {
+        if (props.data.puuid) {
             let champImgCopy = []
-            let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatchlist/" + props.accountId + "/endIndex=" + endIndex + "&beginIndex=" + beginIndex
+            let url = "https://u7bjddoejd.execute-api.eu-west-3.amazonaws.com/prod/getmatchlist/" + props.data.puuid + "/count=" + 10 + "&start=" + beginIndex
             let res = await fetch(url, {
                 method: "GET",
             })
-
+            console.log(url)
             var summonerHistoTmp = await res.json()
 
-            const promises = summonerHistoTmp.matches.map(async (element, i) => {
-                champImgCopy[i] = getChampId(element.champion)
-                return await getSummonerMatchInfo(i, element.gameId)
+            console.log(summonerHistoTmp)
+
+            const promises = summonerHistoTmp.map(async (element, i) => {
+                let matchData = await getSummonerMatchInfo(i, element)
+                console.log(matchData)
+                champImgCopy[i] = matchData[1].info.participants[i].championName
+                return matchData
             });
 
             let resultSummonerMatchInfoTmp = await Promise.all(promises)
@@ -115,17 +104,12 @@ const MatchHisto = (props) => {
                 resultSummonerMatchInfo.push(matches)
             })
 
-            let summonerHistoPrev = {...summonerHisto}
+            let summonerHistoPrev = { ...summonerHisto }
             let summonerHistoNew = {
-                ...summonerHistoPrev,
-                matches: [
-                    ...summonerHistoPrev.matches,
-                    ...summonerHistoTmp.matches
-                ]
+                summonerHistoPrev
             }
-
             let champImgNew = [...champImg, ...champImgCopy]
-
+            console.log(summonerHistoNew)
             setChampImg(champImgNew)
             setSummonerHisto(summonerHistoNew)
             setMatchInfo(resultSummonerMatchInfo)
@@ -134,29 +118,28 @@ const MatchHisto = (props) => {
 
     const loadMore = () => {
         setBeginIndex(currentVal => currentVal + 10)
-        setEndIndex(currentVal => currentVal + 10)
     }
 
     return (
-        summonerHisto.matches.length && matchInfo.length ?
+        summonerHisto.length && matchInfo.length ?
             <div className="m-2">
                 <hr></hr>
-                {summonerHisto.matches.map((item, i) =>
+                {summonerHisto.map((item, i) =>
                     matchInfo[i] ?
-                    <a className="game-histo text-reset text-decoration-none" key={i} href={"#" + item.gameId} rounded="true">
-                        <Jumbotron className="row m-3 p-0 shadow" style={matchInfo[i][2] ? styles.win : styles.lose} rounded="true">
-                            <div className="col-2 text-center">
-                                <img className="rounded mt-2" anonymous="true" width="80px" src={champImg[i] ? "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/champion/" + champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
-                                <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
-                            </div>
-                            <div className="col-10">
-                                Game id : {item.gameId}<br />
-                                <MatchInfo match={item.gameId} accountId={props.accountId} />
-                            </div>
-                        </Jumbotron>
-                    </a>
-                    :
-                    null
+                        <a className="game-histo text-reset text-decoration-none" key={i} href={"#" + item.gameId} rounded="true">
+                            <Jumbotron className="row m-3 p-0 shadow" style={matchInfo[i][2] ? styles.win : styles.lose} rounded="true">
+                                <div className="col-2 text-center">
+                                    <img className="rounded mt-2" anonymous="true" width="80px" src={champImg[i] ? "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/champion/" + champImg[i] + ".png" : ""} alt="" rounded="true" /> <br />
+                                    <span className="badge badge-pill badge-dark  p-1 mb-1"><TimeAgo date={item.timestamp + 60000 * 17} /></span>
+                                </div>
+                                <div className="col-10">
+                                    Game id : {item.gameId}<br />
+                                    <MatchInfo match={item.gameId} accountId={props.accountId} />
+                                </div>
+                            </Jumbotron>
+                        </a>
+                        :
+                        null
                 )}
                 <Button onClick={loadMore} >More</Button>
             </div>

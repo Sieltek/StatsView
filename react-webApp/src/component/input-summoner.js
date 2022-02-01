@@ -67,7 +67,7 @@ class InputSummoner extends React.Component {
             </Media.Body>
           </Media>
           <RankSummoner summonerId={this.state.summonerJson.id} />
-          <MatchHisto accountId={this.state.summonerJson.accountId} />
+          <MatchHisto data={this.state.summonerJson} />
         </div>
       )
     } else if (this.state.summonerJson.status) {
